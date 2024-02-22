@@ -1,3 +1,28 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
+    "import/prefer-default-export": "off",
+    "react/require-default-props": "off",
+    "react/no-unused-prop-types": "off",
+    "react/button-has-type": "off"
+  }
 }
