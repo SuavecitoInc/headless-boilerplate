@@ -31,17 +31,14 @@ export async function fetchStorefront({
 }: FetchStorefront) {
   try {
     const {
-      SHOPIFY_STOREFRONT_API_TOKEN: apiToken,
-      SHOPIFY_STOREFRONT_NAME: storeName,
-      SHOPIFY_STOREFRONT_API_VERSION: apiVer,
+      SHOPIFY_STOREFRONT_SCHEMA_URL: schemaUrl,
+      SHOPIFY_STOREFRONT_ACCESS_TOKEN: apiToken,
     } = process.env;
-
-    const apiUrl = `https://${storeName}.myshopify.com/api/${apiVer}/graphql.json`;
     const fetchHeaders = new Headers();
     fetchHeaders.set('Content-Type', 'application/json');
     fetchHeaders.set('X-Shopify-Storefront-Access-Token', apiToken as string);
 
-    const response = await fetch(apiUrl, {
+    const response = await fetch(schemaUrl as string, {
       method: 'POST',
       headers: fetchHeaders,
       body: JSON.stringify({
