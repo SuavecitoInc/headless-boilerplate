@@ -19,7 +19,7 @@ const getData = async (handle: string) => {
     if (!product) {
       return null;
     }
-    return { product };
+    return product;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error', error);
@@ -39,10 +39,8 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { handle } = params;
   const data = await getData(handle);
-  if (!data || !data.product) return notFound();
-  const productVariants = flattenConnection(
-    data.product.variants
-  ) as ProductVariant[];
+  if (!data) return notFound();
+  const productVariants = flattenConnection(data.variants) as ProductVariant[];
   let initialVariant = productVariants[0];
   const variantId = searchParams.variant;
   if (searchParams.variant) {
@@ -57,10 +55,10 @@ export default async function Page({ params, searchParams }: PageProps) {
     <main>
       <ProductProvider
         initialVariant={initialVariant}
-        options={data.product.options}
+        options={data.options}
         variants={productVariants}
       >
-        <ProductTemplate data={data.product} />
+        <ProductTemplate data={data} />
       </ProductProvider>
     </main>
   );
