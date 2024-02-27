@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useFormStatus } from 'react-dom';
+import { addToCart } from '@/app/cart/actions';
 import Button, { ButtonProps } from './Button';
 import Spinner from './Spinner';
 
@@ -38,12 +39,11 @@ const AddToCart: React.FC<AddToCartProps> = ({
   availableForSale,
   ...props
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cartInput = [{ merchandiseId, quantity }];
 
   const disabled = props.disabled || !availableForSale;
   return (
-    <form>
+    <form action={() => addToCart(cartInput)}>
       <AddToCartButton {...props} disabled={disabled} />
     </form>
   );

@@ -36,6 +36,7 @@ const ProductMedia: React.FC<ProductMediaProps> = ({ media }) => {
   const mediaImages: MediaImage[] = flattenConnection(media).filter(
     (_media) => _media.mediaContentType === 'IMAGE'
   );
+  // Set the initial image to the selected variant image if it exists
   let initialImage = mediaImages[0];
   if (selectedVariant.image) {
     const selectedImageFromVariant = mediaImages.find(
@@ -48,9 +49,9 @@ const ProductMedia: React.FC<ProductMediaProps> = ({ media }) => {
       initialImage = selectedImageFromVariant;
     }
   }
-
   const [selectedImage, setSelectedImage] = useState<MediaImage>(initialImage);
 
+  // Update the selected image when the selected variant changes
   useEffect(() => {
     if (selectedVariant.image) {
       const selectedImageFromVariant = mediaImages.find(

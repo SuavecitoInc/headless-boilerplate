@@ -17,15 +17,13 @@ const Product: React.FC<ProductProps> = ({ data }) => {
   const { selectedVariant } = useProduct();
   const { title, media, options } = data;
   return (
-    <div>
-      <div className="flex [&>*]:flex-1">
-        <ProductMedia media={media} />
-        <div>
-          <h1>{title}</h1>
-          <p>{selectedVariant.id}</p>
-          <ProductOptions options={options} />
-          <ProductForm />
-        </div>
+    <div className="flex [&>*]:flex-1 md:gap-x-[50px]">
+      <ProductMedia media={media} />
+      <div>
+        <h1>{title}</h1>
+        <p>{selectedVariant.id}</p>
+        <ProductOptions options={options} />
+        <ProductForm />
       </div>
     </div>
   );

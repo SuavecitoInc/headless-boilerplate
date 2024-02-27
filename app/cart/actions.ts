@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers';
 import { revalidateTag } from 'next/cache';
 import { fetchStorefront } from '@/utils/server';
+import { flattenConnection } from '@/utils/helpers';
 import type {
   Cart as CartType,
   CartLineInput,
@@ -124,5 +125,75 @@ export const getCartCount = async () => {
   } catch (e) {
     // captureError(e);
     return 0;
+  }
+};
+
+// CART MUTATIONS
+
+export const addToCart = async (
+  lines: CartLineInput[]
+): Promise<CartLine | null> => {
+  try {
+    const cartId = await initializeCartId();
+    if (!cartId) throw new Error('Cart not found');
+    const { data } = await fetchStorefront({
+      query: CART_LINES_ADD_QUERY,
+      variables: { cartId, lines },
+    });
+    const { cartLinesAdd } = data;
+    const { cart } = cartLinesAdd;
+    if (!cart) throw new Error('Cart not found');
+    const firstLine = lines[0];
+    const lineItems = flattenConnection(cart.lines) as CartLine[];
+    const addedLine = lineItems.find(
+      (line) => line.merchandise.id === firstLine.merchandiseId
+    );
+    if (!addedLine) throw new Error('Line not added to cart');
+    revalidateTag('cart');
+    return addedLine;
+  } catch (e) {
+    // captureError(e);
+    return null;
+  }
+};
+
+export const updateCart = async (lines: CartLineUpdateInput[]) => {
+  try {
+    const id = getCookie();
+    if (!id) {
+      throw new Error('Cart not found');
+    }
+    const { data } = await fetchStorefront({
+      query: CART_LINES_UPDATE_QUERY,
+      variables: { cartId: id, lines },
+    });
+    revalidateTag('cart');
+    const { cartLinesUpdate } = data;
+    const { cart } = cartLinesUpdate;
+    return cart;
+  } catch (e) {
+    // captureError(e);
+    return null;
+  }
+};
+
+export const removeCart = async (lineIds: string[]) => {
+  try {
+    const id = getCookie();
+    if (!id) {
+      throw new Error('Cart not found');
+    }
+
+    const { data } = await fetchStorefront({
+      query: CART_LINES_REMOVE_QUERY,
+      variables: { cartId: id, lineIds },
+    });
+    revalidateTag('cart');
+    const { cartLinesRemove } = data;
+    const { cart } = cartLinesRemove;
+    return cart;
+  } catch (e) {
+    // captureError(e);
+    return null;
   }
 };
