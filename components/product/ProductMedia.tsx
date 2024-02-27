@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -34,9 +36,20 @@ const ProductMedia: React.FC<ProductMediaProps> = ({ media }) => {
   const mediaImages: MediaImage[] = flattenConnection(media).filter(
     (_media) => _media.mediaContentType === 'IMAGE'
   );
-  const [selectedImage, setSelectedImage] = useState<MediaImage>(
-    mediaImages[0]
-  );
+  let initialImage = mediaImages[0];
+  if (selectedVariant.image) {
+    const selectedImageFromVariant = mediaImages.find(
+      (_media) =>
+        _media.image &&
+        selectedVariant.image &&
+        _media.image.url === selectedVariant.image.url
+    );
+    if (selectedImageFromVariant) {
+      initialImage = selectedImageFromVariant;
+    }
+  }
+
+  const [selectedImage, setSelectedImage] = useState<MediaImage>(initialImage);
 
   useEffect(() => {
     if (selectedVariant.image) {

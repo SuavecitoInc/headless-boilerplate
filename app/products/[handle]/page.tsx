@@ -43,26 +43,24 @@ export default async function Page({ params, searchParams }: PageProps) {
   const productVariants = flattenConnection(
     data.product.variants
   ) as ProductVariant[];
-  const getInitialVariant = (): ProductVariant => {
-    try {
-      if (!searchParams.variant) return productVariants[0];
-      const foundVariant = productVariants.find(
-        (variant) => variant.id === searchParams.variant
-      );
-      if (foundVariant) return foundVariant;
-      return productVariants[0];
-    } catch (error) {
-      return productVariants[0];
-    }
-  };
+  let initialVariant = productVariants[0];
+  const variantId = searchParams.variant;
+  if (searchParams.variant) {
+    const foundVariant = productVariants.find((v) => {
+      const legacyId = v.id.replace('gid://shopify/ProductVariant/', '');
+      return legacyId === variantId;
+    });
+    if (foundVariant) initialVariant = foundVariant;
+  }
+
   return (
     <main>
       <ProductProvider
-        initialVariant={getInitialVariant()}
+        initialVariant={initialVariant}
         options={data.product.options}
         variants={productVariants}
       >
-        <ProductTemplate data={data.product} variantId={searchParams.variant} />
+        <ProductTemplate data={data.product} />
       </ProductProvider>
     </main>
   );
