@@ -1,6 +1,7 @@
 import { MEDIA_FRAGMENT } from '../fragments';
 
 export const PRODUCT_PAGE_QUERY = `#graphql
+  ${MEDIA_FRAGMENT}
   query getProductPageData($handle: String!) {
     product(handle: $handle) {
       id
@@ -26,6 +27,11 @@ export const PRODUCT_PAGE_QUERY = `#graphql
         maxVariantPrice {
           amount
           currencyCode
+        }
+      }
+      media(first: 100) {
+        nodes {
+          ...Media
         }
       }
       variants(first: 100) {
