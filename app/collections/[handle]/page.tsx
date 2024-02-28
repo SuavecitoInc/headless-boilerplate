@@ -1,12 +1,12 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { COLLECTION_QUERY } from '@/data/storefront/queries/collection';
+import { Collection as CollectionTemplate } from '@/components';
+import { COLLECTION_QUERY } from '@/data/storefront';
+import { PAGINATION_SIZE } from '@/data/consts';
 import type { Collection as CollectionType } from '@/types/storefront';
 import { fetchStorefront } from '@/utils/server';
 
 export const dynamic = 'force-dynamic';
-
-const PAGINATION_SIZE = 24;
 
 type PageProps = {
   params: {
@@ -40,6 +40,7 @@ export default async function Page({ params }: PageProps) {
     <main>
       <h1>Collections</h1>
       <h2>{handle}</h2>
+      <CollectionTemplate data={data} />
     </main>
   );
 }

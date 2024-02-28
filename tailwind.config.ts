@@ -17,6 +17,9 @@ const config: Config = {
       aspectRatio: {
         product: '5/4',
       },
+      opacity: {
+        hover: '.75',
+      },
     },
   },
   plugins: [],
