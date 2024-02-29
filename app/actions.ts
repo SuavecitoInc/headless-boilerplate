@@ -6,7 +6,7 @@ import { MENU_QUERY } from '@/data/storefront';
 
 export const getMenu = async (): Promise<MenuType | null> => {
   try {
-    const menuName = 'main-menu';
+    const menuName = 'next-header';
     const { data } = await fetchStorefront({
       query: MENU_QUERY,
       variables: { handle: menuName },

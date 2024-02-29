@@ -1,3 +1,19 @@
+@import url('https://use.typekit.net/yqy5ifz.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'futura-pt', sans-serif;
+  }
+}
+
+:root {
+  --futura-font: 'futura-pt', sans-serif;
+}
+
+.product-description iframe {
+  @apply w-full h-auto aspect-video;
+}

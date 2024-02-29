@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import Button from './Button';
 import { IconPlus, IconMinus } from './Icons';
 
@@ -9,11 +10,13 @@ const MAX_QUANTITY = 30;
 type QuantityProps = {
   currentQuantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  className?: string;
 };
 
 const Quantity: React.FC<QuantityProps> = ({
   currentQuantity,
   setQuantity,
+  className = '',
 }) => {
   const increment = useCallback(() => {
     if (currentQuantity < MAX_QUANTITY) {
@@ -32,7 +35,7 @@ const Quantity: React.FC<QuantityProps> = ({
   }, [currentQuantity, setQuantity]);
 
   return (
-    <div className="flex items-center gap-4">
+    <div className={clsx('flex items-center gap-4', className)}>
       <Button isUnstyled onClick={decrement} aria-label="Decrement quantity">
         <IconMinus />
       </Button>

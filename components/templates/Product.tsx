@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { useProduct } from '@/contexts/Product';
 import { Product as ProductType } from '@/types/storefront';
 import {
   ProductMedia,
@@ -14,16 +11,23 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({ data }) => {
-  const { selectedVariant } = useProduct();
-  const { title, media, options } = data;
+  const { title, media, options, descriptionHtml } = data;
   return (
-    <div className="flex [&>*]:flex-1 md:gap-x-[50px]">
-      <ProductMedia media={media} />
-      <div>
-        <h1>{title}</h1>
-        <p>{selectedVariant.id}</p>
+    <div className="flex flex-col md:flex-row md:gap-x-[50px]">
+      <ProductMedia className="w-full md:w-1/2" media={media} />
+      <div className="w-full md:w-1/2">
+        <h1 className="mb-2.5 text-[26px] font-bold lg:text-[30px] lg:leading-normal">
+          {title}
+        </h1>
         <ProductOptions options={options} />
         <ProductForm />
+        <div
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: descriptionHtml,
+          }}
+          className="product-description mt-[10px] lg:mt-[15px]"
+        />
       </div>
     </div>
   );

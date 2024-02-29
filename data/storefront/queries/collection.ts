@@ -8,6 +8,30 @@ export const COLLECTION_QUERY = `#graphql
         nodes {
           id
           title
+          handle
+          featuredImage {
+            url
+            altText
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          variants(first: 1) {
+            nodes {
+              id
+              price {
+                amount
+                currencyCode
+              }
+            }
+          }
         }
         pageInfo { 
           hasNextPage

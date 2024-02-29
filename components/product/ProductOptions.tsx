@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import clsx from 'clsx';
 import type { ProductOption } from '@/types/storefront';
@@ -28,7 +30,7 @@ const Option: React.FC<OptionProps> = ({
       onClick={() => handleOptionChange(name, value)}
       disabled={disabled}
       className={clsx(
-        'rounded-[4px] border-2 px-[15px] py-[7.5px] lg:text-[18px] lg:leading-normal',
+        'rounded-[4px] border-2 px-[15px] py-[7.5px] text-sm md:text-base',
         checked ? 'border-primary bg-suaveGrey text-primary' : 'border-body',
         disabled && 'opacity-20'
       )}

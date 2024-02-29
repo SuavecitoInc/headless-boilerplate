@@ -17,7 +17,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
 
   const buttonText = disabled ? 'Sold Out' : 'Add To Cart';
   return (
-    <Button disabled={disabled} isSubmit {...props}>
+    <Button
+      {...props}
+      disabled={disabled}
+      isSubmit
+      className="inline-flex items-center justify-center min-w-[120px] h-[40px]"
+    >
       {pending ? (
         <Spinner size="tiny" />
       ) : (

@@ -92,17 +92,24 @@ const MenuLink: React.FC<MenuLinkProps> = ({
   const relUrl = getRelativeUrl(item.url);
   const isActive = isActiveLink(usePathname(), relUrl);
   const hasSubMenu = item.items && item.items.length > 0;
-  return !hasSubMenu ? (
-    <Link className={clsx(isActive && 'underline', 'font-bold')} href={relUrl}>
-      <span>{item.title}</span>
-    </Link>
-  ) : (
-    <SubMenu
-      title={item.title}
-      items={item.items}
-      showSubMenu={showSubMenu}
-      setShowSubMenu={setShowSubMenu}
-    />
+  return (
+    <div>
+      {!hasSubMenu ? (
+        <Link
+          className={clsx(isActive && 'underline', 'font-bold')}
+          href={relUrl}
+        >
+          <span>{item.title}</span>
+        </Link>
+      ) : (
+        <SubMenu
+          title={item.title}
+          items={item.items}
+          showSubMenu={showSubMenu}
+          setShowSubMenu={setShowSubMenu}
+        />
+      )}
+    </div>
   );
 };
 
@@ -156,7 +163,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ menu, cartCount, logo }) => {
           setShowSubMenu={setShowSubMenu}
         />
       </div>
-      <div className="flex">
+      <div className="flex gap-2.5">
         <IconSearch />
         <CartIcon count={cartCount} />
       </div>

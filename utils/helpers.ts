@@ -26,6 +26,8 @@ export const flattenConnection = (connectionArray: ConItem) => {
   return [];
 };
 
+export const formatMoney = (amount: string) => parseFloat(amount).toFixed(2);
+
 // determines whether a product is discounted for on sale
 export const isDiscounted = (price: MoneyV2, compareAtPrice: MoneyV2) => {
   if (Number(compareAtPrice?.amount) > Number(price?.amount)) {

@@ -29,9 +29,13 @@ const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ featuredMedia }) => (
 
 type ProductMediaProps = {
   media: MediaConnection;
+  className?: string;
 };
 
-const ProductMedia: React.FC<ProductMediaProps> = ({ media }) => {
+const ProductMedia: React.FC<ProductMediaProps> = ({
+  media,
+  className = '',
+}) => {
   const { selectedVariant } = useProduct();
   const mediaImages: MediaImage[] = flattenConnection(media).filter(
     (_media) => _media.mediaContentType === 'IMAGE'
@@ -67,7 +71,7 @@ const ProductMedia: React.FC<ProductMediaProps> = ({ media }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVariant]);
   return (
-    <div>
+    <div className={className}>
       <div>
         <FeaturedMedia featuredMedia={selectedImage} />
       </div>

@@ -38,8 +38,6 @@ export default async function Page({ params }: PageProps) {
   if (!data) return notFound();
   return (
     <main>
-      <h1>Collections</h1>
-      <h2>{handle}</h2>
       <CollectionTemplate data={data} />
     </main>
   );
