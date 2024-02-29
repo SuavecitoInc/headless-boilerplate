@@ -27,24 +27,37 @@ export const flattenConnection = (connectionArray: ConItem) => {
 };
 
 // determines whether a product is discounted for on sale
-export function isDiscounted(price: MoneyV2, compareAtPrice: MoneyV2) {
+export const isDiscounted = (price: MoneyV2, compareAtPrice: MoneyV2) => {
   if (Number(compareAtPrice?.amount) > Number(price?.amount)) {
     return true;
   }
   return false;
-}
+};
 
 /**
  * Takes in variant selected options and returns an object
  * @param variantOptions
  * @returns `{ option1: value, option2: value, option3: value }
  */
-export function variantOptionsToObject(
+export const variantOptionsToObject = (
   variantOptions: { name: string; value: string }[]
-) {
+) => {
   const currentSelectedOptions: { [key: string]: string } = {};
   variantOptions.forEach((option: { name: string; value: string }) => {
     currentSelectedOptions[option.name] = option.value;
   });
   return currentSelectedOptions;
-}
+};
+
+// Utitlity functions for navigation
+export const getRelativeUrl = (url: string) => {
+  const urlObj = new URL(url);
+  if (url.includes('#')) {
+    const { hash } = urlObj;
+    return `/${hash}`;
+  }
+  return urlObj.pathname;
+};
+
+export const isActiveLink = (pathname: string, relativeUrl: string) =>
+  pathname === relativeUrl;

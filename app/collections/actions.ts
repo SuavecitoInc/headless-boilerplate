@@ -20,15 +20,16 @@ export const getMoreProducts = async (
     });
     const { collection }: { collection: CollectionType } = data;
     const { products }: { products: ProductConnection } = collection;
-    console.log('products', products);
+    const { pageInfo } = products;
+    const { endCursor, hasNextPage } = pageInfo;
 
     if (!products) {
       return null;
     }
     return {
       products: flattenConnection(products),
-      endCursor: products.pageInfo.endCursor,
-      hasNextPage: products.pageInfo.hasNextPage,
+      endCursor,
+      hasNextPage,
     };
   } catch (error) {
     // captureError(error);

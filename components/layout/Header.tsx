@@ -1,15 +1,15 @@
 import React from 'react';
 import { getCartCount } from '@/app/cart/actions';
-import { CartIcon } from '@/components/cart';
+import { getMenu } from '@/app/actions';
+import Navbar from './nav/Navbar';
 
 const Header: React.FC = async () => {
   const cartCount = await getCartCount();
+  const menu = await getMenu();
+  if (!menu) return null;
   return (
-    <header>
-      <div className="flex">
-        <span>Header</span>
-        <CartIcon count={cartCount} />
-      </div>
+    <header className="border-b border-b-body">
+      <Navbar cartCount={cartCount} menu={menu} />
     </header>
   );
 };

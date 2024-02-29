@@ -38,8 +38,9 @@ const Collection: React.FC<CollectionProps> = ({ data }) => {
         next={loadMore}
         hasMore={collection.hasNextPage}
         loader={<Spinner />}
+        style={{ overflow: 'hidden' }}
       >
-        <div className="grid">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {collection.products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

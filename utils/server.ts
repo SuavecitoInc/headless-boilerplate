@@ -54,6 +54,9 @@ export async function fetchStorefront({
     });
 
     const data = await response.json();
+    if (data.errors) {
+      throw new Error(data.errors[0].message);
+    }
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
