@@ -19,8 +19,8 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           <Image
             src={featuredImage.url}
             alt={title}
-            layout="fill"
-            objectFit="cover"
+            fill
+            className="object-cover"
           />
         ) : (
           <Placeholder />

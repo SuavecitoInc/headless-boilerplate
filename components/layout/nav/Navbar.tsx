@@ -10,7 +10,7 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ cartCount, menu }) => (
-  <nav className="mx-auto max-w-screen-2xl px-2.5 md:px-9 lg:px-12">
+  <nav className="mx-auto max-w-screen-2xl md:px-9 lg:px-12">
     <div className="md:hidden block">
       <MobileNav menu={menu} cartCount={cartCount} logo={logo} />
     </div>

@@ -5,9 +5,9 @@ import type {
   ProductConnection,
 } from '@/types/storefront';
 import { COLLECTION_QUERY } from '@/data/storefront';
-import { fetchStorefront } from '@/utils/server';
 import { PAGINATION_SIZE } from '@/data/consts';
 import { flattenConnection } from '@/utils/helpers';
+import { fetchStorefront } from '@/utils/server';
 
 export const getMoreProducts = async (
   handle: string,

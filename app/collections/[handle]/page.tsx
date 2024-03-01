@@ -6,7 +6,7 @@ import { PAGINATION_SIZE } from '@/data/consts';
 import type { Collection as CollectionType } from '@/types/storefront';
 import { fetchStorefront } from '@/utils/server';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'auto';
 
 type PageProps = {
   params: {
@@ -27,7 +27,6 @@ const getData = async (handle: string) => {
     }
     return collection;
   } catch (error) {
-    console.error(error);
     return null;
   }
 };
