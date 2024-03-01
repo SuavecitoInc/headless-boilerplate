@@ -20,7 +20,7 @@ const config: CodegenConfig = {
     },
   ],
   generates: {
-    './types/storefront': {
+    './types/storefront.ts': {
       plugins: ['typescript', 'typescript-operations'],
     },
   },
