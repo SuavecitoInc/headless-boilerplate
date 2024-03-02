@@ -17,7 +17,6 @@ const HITS_PER_PAGE = 5;
 
 export const Autocomplete: React.FC = () => {
   const { setShowSearch } = useAutocomplete();
-  const [query, setQuery] = useState<string>('' as string);
   const router = useRouter();
   const [autocompleteState, setAutocompleteState] = useState<any>({});
   const containerRef = useRef<null | HTMLDivElement>(null);
@@ -47,18 +46,13 @@ export const Autocomplete: React.FC = () => {
         id: 'autocomplete-search',
         onStateChange({ state }) {
           setAutocompleteState(state);
-          setQuery(state.query);
         },
-        initialState: {
-          query,
-        },
+
         onSubmit({ state }) {
-          setQuery(state.query);
           setShowSearch(false);
           router.push(`/search?q=${state.query}`);
         },
         onReset() {
-          setQuery('');
           setAutocompleteState({});
         },
 
@@ -197,12 +191,10 @@ export const Autocomplete: React.FC = () => {
             // @ts-ignore
             <div
               ref={panelRef}
-              className={[
-                'aa-Panel w-full',
-                autocompleteState.status === 'stalled' && 'aa-Panel--stalled',
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={clsx(
+                'aa-Panel !overflow-auto w-full h-screen md:h-[unset]',
+                autocompleteState.status === 'stalled' && 'aa-Panel--stalled'
+              )}
               {...autocomplete.getPanelProps({})}
             >
               <div className="m-4 flex flex-col border-tertiary md:flex-row">
@@ -217,7 +209,7 @@ export const Autocomplete: React.FC = () => {
                         isProducts ? 'flex-2' : 'flex-1'
                       )}
                     >
-                      <div>
+                      <div className="pb-24 md:pb-0">
                         <h3 className="mb-3 font-bold uppercase text-tertiary">
                           {source.sourceId}
                         </h3>

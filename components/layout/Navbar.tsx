@@ -18,9 +18,12 @@ const NavContent: React.FC<Props> = ({ cartCount, menu }) => {
   return (
     <>
       {showSearch && (
-        <div className="fixed z-50 w-screen bg-white py-9 border-b border-b-body">
-          {instance}
-        </div>
+        <>
+          <div className="fixed z-50 w-screen bg-white py-8 border-b border-b-body px-2.5">
+            {instance}
+          </div>
+          <div className="bg-zinc-800/80 h-screen block inset-0 w-screen fixed z-40" />
+        </>
       )}
       <nav className="mx-auto max-w-screen-2xl md:px-9 lg:px-12">
         <div className="md:hidden block">

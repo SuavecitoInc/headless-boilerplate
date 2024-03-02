@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
-import { Configure, Hits, Pagination } from 'react-instantsearch';
+import { Configure, Hits, Pagination, SearchBox } from 'react-instantsearch';
 import { AutoHit, SearchFilters } from '@/components/search';
 import { Button, Heading, IconFilters, Divider } from '@/components/ui';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -22,8 +22,8 @@ const Search: React.FC<Props> = ({ query }) => {
       indexName="shopify_products"
       future={{ preserveSharedStateOnUnmount: true }}
     >
-      {/* <SearchBox /> */}
       <Configure query={query} />
+
       <div>
         <div className="flex justify-between">
           <Heading type="h1" className="mb-2 md:mb-4">
@@ -34,6 +34,9 @@ const Search: React.FC<Props> = ({ query }) => {
               <IconFilters size="25" />
             </Button>
           </div>
+        </div>
+        <div className="mb-2 md:mb-3.5">
+          <SearchBox />
         </div>
         <AnimatePresence>
           {showFilters && (

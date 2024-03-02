@@ -13,7 +13,7 @@ type ProductProps = {
 const Product: React.FC<ProductProps> = ({ data }) => {
   const { title, media, options, descriptionHtml } = data;
   return (
-    <div className="flex flex-col md:flex-row md:gap-x-[50px]">
+    <div className="flex flex-col md:flex-row md:gap-x-[50px] gap-y-3">
       <ProductMedia className="w-full md:w-1/2" media={media} />
       <div className="w-full md:w-1/2">
         <h1 className="mb-2.5 text-[26px] font-bold lg:text-[30px] lg:leading-normal">
