@@ -10,8 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#c6a85b',
-        body: '#0c0c0d',
+        primary: '#595db2',
+        secondary: '#2F4F4F',
+        tertiary: '#1a1a1a',
+        body: '#1a1a1a',
         suaveGrey: '#E5E5E5',
       },
       aspectRatio: {

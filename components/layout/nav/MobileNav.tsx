@@ -5,14 +5,9 @@ import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  IconMenu,
-  Button,
-  IconChevron,
-  IconClose,
-  IconSearch,
-} from '@/components/ui';
+import { IconMenu, Button, IconChevron, IconClose } from '@/components/ui';
 import { CartIcon } from '@/components/cart';
+import { SearchIcon } from '@/components/search';
 import { Menu as MenuType, MenuItem } from '@/types/storefront';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRelativeUrl, isActiveLink } from '@/utils/helpers';
@@ -195,7 +190,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
           </div>
         </Link>
         <div className="flex items-center gap-3">
-          <IconSearch />
+          <SearchIcon />
           <CartIcon count={cartCount} />
           <Button isUnstyled onClick={toggleMenu}>
             {showMenu ? <IconClose /> : <IconMenu />}

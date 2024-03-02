@@ -27,6 +27,7 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
             className="h-auto w-auto object-contain"
             src={merchandise.image.url}
             alt={merchandise.image.altText ?? 'Line Item'}
+            sizes="(max-width: 768px) 300px, 40vw"
           />
         ) : (
           <Placeholder />

@@ -21,6 +21,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             alt={title}
             fill
             className="object-cover"
+            sizes="(max-width: 768px) 300px, 40vw"
           />
         ) : (
           <Placeholder />

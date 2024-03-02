@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useClickAway } from 'react-use';
 import clsx from 'clsx';
-import { IconSearch, Button, IconChevron } from '@/components/ui';
+import { Button, IconChevron } from '@/components/ui';
 import { CartIcon } from '@/components/cart';
+import { SearchIcon } from '@/components/search';
 import { Menu as MenuType, MenuItem } from '@/types/storefront';
 import { getRelativeUrl, isActiveLink } from '@/utils/helpers';
 
@@ -164,7 +165,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ menu, cartCount, logo }) => {
         />
       </div>
       <div className="flex gap-2.5">
-        <IconSearch />
+        <SearchIcon />
         <CartIcon count={cartCount} />
       </div>
     </div>

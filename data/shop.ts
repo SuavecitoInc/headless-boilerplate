@@ -3,6 +3,8 @@ interface ShopConfig {
   logoUrl: string;
   apiToken: string;
   schemaUrl: string;
+  headerHandle: string;
+  footerHandle: string;
 }
 
 const {
@@ -13,6 +15,8 @@ const {
 const shopConfig: ShopConfig = {
   title: 'Headless Boilerplate Shop',
   logoUrl: '/path/to/logo.png',
+  headerHandle: '',
+  footerHandle: '',
   apiToken: apiToken as string,
   schemaUrl: schemaUrl as string,
   // Add other configurations as needed

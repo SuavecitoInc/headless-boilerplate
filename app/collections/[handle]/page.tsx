@@ -6,7 +6,7 @@ import { PAGINATION_SIZE } from '@/data/consts';
 import type { Collection as CollectionType } from '@/types/storefront';
 import { fetchStorefront } from '@/utils/server';
 
-export const dynamic = 'auto';
+export const dynamic = 'force-dynamic';
 
 type PageProps = {
   params: {
