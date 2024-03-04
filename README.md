@@ -1,6 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). This project is a boilerplate integrated with Shopify's Storefront API to serve as an e-commerce boilerplate.
 
 ## Getting Started
+
+```bash
+# Shopify
+SHOPIFY_STOREFRONT_SCHEMA_URL="{YOUR STORE URL}"
+SHOPIFY_STOREFRONT_ACCESS_TOKEN="{YOUR TOKEN}"
+# Algolia
+NEXT_PUBLIC_ALGOLIA_APP_ID="{YOUR_APP_ID}"
+NEXT_PUBLIC_ALGOLIA_API_KEY="{YOUR_KEY}"
+```
 
 First, run the development server:
 
