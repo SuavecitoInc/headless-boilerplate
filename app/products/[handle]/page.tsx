@@ -28,13 +28,13 @@ export const generateMetadata = async ({
     return {
       title: `${title} | ${siteTitle}`,
       description,
-      openGraph: {
-        title: `${title} | ${siteTitle!}`,
-        description,
-        images: product.featuredImage
-          ? [{ url: product.featuredImage.url }]
-          : [],
-      },
+      // openGraph: {
+      //   title: `${title} | ${siteTitle!}`,
+      //   description,
+      //   images: product.featuredImage
+      //     ? [{ url: product.featuredImage.url }]
+      //     : [],
+      // },
     };
   } catch (error) {
     return {};

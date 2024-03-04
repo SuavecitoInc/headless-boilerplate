@@ -27,11 +27,11 @@ export const generateMetadata = async ({
     return {
       title: `${title} | ${siteTitle}`,
       description,
-      openGraph: {
-        title: `${title} | ${siteTitle}`,
-        description,
-        images: collection.image ? [{ url: collection.image.url }] : [],
-      },
+      // openGraph: {
+      //   title: `${title} | ${siteTitle}`,
+      //   description,
+      //   images: collection.image ? [{ url: collection.image.url }] : [],
+      // },
     };
   } catch (error) {
     return {};
