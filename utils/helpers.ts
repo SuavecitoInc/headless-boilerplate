@@ -63,3 +63,5 @@ export const getRelativeUrl = (url: string) => {
 
 export const isActiveLink = (pathname: string, relativeUrl: string) =>
   pathname === relativeUrl;
+
+export const arrayOf = (length: number) => Array.from({ length }, (_, i) => i);

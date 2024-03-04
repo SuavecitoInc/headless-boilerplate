@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useClickAway } from 'react-use';
 import clsx from 'clsx';
-import { IconSearch, Button, IconChevron } from '@/components/ui';
+import { Button, IconChevron } from '@/components/ui';
 import { CartIcon } from '@/components/cart';
+import { SearchIcon } from '@/components/search';
 import { Menu as MenuType, MenuItem } from '@/types/storefront';
 import { getRelativeUrl, isActiveLink } from '@/utils/helpers';
 
@@ -24,7 +25,11 @@ const SubMenuLink: React.FC<SubMenuLinkProps> = ({ item, setShowSubMenu }) => {
     router.push(relUrl);
   };
   return (
-    <Button className="text-left" isUnstyled onClick={handleClick}>
+    <Button
+      className="text-left hover:opacity-hover"
+      isUnstyled
+      onClick={handleClick}
+    >
       <span>{item.title}</span>
     </Button>
   );
@@ -51,7 +56,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
   return (
     <div className="font-bold" ref={ref}>
       <Button
-        className="flex items-center"
+        className="flex items-center hover:opacity-hover"
         isUnstyled
         onClick={() => setShowSubMenu(!showSubMenu)}
       >
@@ -96,7 +101,10 @@ const MenuLink: React.FC<MenuLinkProps> = ({
     <div>
       {!hasSubMenu ? (
         <Link
-          className={clsx(isActive && 'underline', 'font-bold')}
+          className={clsx(
+            isActive && 'underline',
+            'font-bold hover:opacity-hover'
+          )}
           href={relUrl}
         >
           <span>{item.title}</span>
@@ -145,7 +153,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ menu, cartCount, logo }) => {
   const [showSubMenu, setShowSubMenu] = useState(false);
   return (
     <div className="flex items-center text-primary justify-between">
-      <Link href="/">
+      <Link href="/" className="hover:opacity-hover">
         <div className="aspect-video relative max-h-[70px]">
           <Image
             src={logo}
@@ -164,7 +172,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ menu, cartCount, logo }) => {
         />
       </div>
       <div className="flex gap-2.5">
-        <IconSearch />
+        <SearchIcon />
         <CartIcon count={cartCount} />
       </div>
     </div>

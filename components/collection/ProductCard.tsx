@@ -12,7 +12,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
   return (
     <div>
       <Link
-        className="relative aspect-product block hover:opacity-hover"
+        className="relative aspect-product block hover:opacity-hover mb-2.5 md:mb-4"
         href={`/products/${handle}`}
       >
         {featuredImage ? (
@@ -20,7 +20,8 @@ const ProductCard: React.FC<Props> = ({ product }) => {
             src={featuredImage.url}
             alt={title}
             fill
-            className="object-cover"
+            className="h-auto w-auto object-contain"
+            sizes="(max-width: 768px) 300px, 40vw"
           />
         ) : (
           <Placeholder />
@@ -28,7 +29,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       </Link>
       <Link
         href={`/products/${handle}`}
-        className="text-primary hover:underline"
+        className="text-primary hover:underline mb-2.5 md:mb-4"
       >
         <span>{title}</span>
       </Link>

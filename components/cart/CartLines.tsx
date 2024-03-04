@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Divider, Placeholder } from '@/components/ui';
+import { Divider, Placeholder, Money } from '@/components/ui';
 import { CartLine } from '@/types/storefront';
 import CartQuantity from './CartQuantity';
 import CartRemove from './CartRemove';
@@ -15,6 +15,8 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
   const { merchandise } = lineItem;
   const variantId = merchandise.id.replace('gid://shopify/ProductVariant/', '');
   const link = `/products/${merchandise.product.handle}?variant=${variantId}`;
+  const hasOptions =
+    merchandise.selectedOptions && merchandise.selectedOptions.length > 0;
   return (
     <div className="flex gap-2 md:gap-8">
       <Link
@@ -27,6 +29,7 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
             className="h-auto w-auto object-contain"
             src={merchandise.image.url}
             alt={merchandise.image.altText ?? 'Line Item'}
+            sizes="(max-width: 768px) 300px, 40vw"
           />
         ) : (
           <Placeholder />
@@ -42,30 +45,32 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
         </div>
         <div className="flex justify-between">
           <div>
-            <div className="mb-[10px] flex flex-col gap-[1px] leading-tight md:gap-1 md:text-[18px]">
-              {merchandise.selectedOptions
-                .filter(
-                  (option) =>
-                    option.name !== 'Title' && option.value !== 'Default Title'
-                )
-                .map((option) => (
-                  <div key={option.name}>
-                    <span>
-                      {option.name}: {option.value}
-                    </span>
-                  </div>
-                ))}
-            </div>
-
+            {hasOptions && (
+              <div className="mb-[10px] flex flex-col gap-[1px] leading-tight md:gap-1 md:text-[18px]">
+                {merchandise.selectedOptions
+                  .filter(
+                    (option) =>
+                      option.name !== 'Title' &&
+                      option.value !== 'Default Title'
+                  )
+                  .map((option) => (
+                    <div key={option.name}>
+                      <span>
+                        {option.name}: {option.value}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            )}
             <CartRemove lineItem={lineItem} />
           </div>
           <div className="flex flex-col lg:gap-6 items-end gap-2 justify-end lg:items-baseline lg:flex-row">
             <div className="leading-normal md:text-[18px]">
-              <span>${lineItem.cost.amountPerQuantity.amount}</span>
+              <Money data={lineItem.cost.amountPerQuantity} />
             </div>
             <CartQuantity lineItem={lineItem} />
             <div className="font-bold leading-normal md:text-[18px]">
-              <span>${lineItem.cost.subtotalAmount.amount}</span>
+              <Money data={lineItem.cost.subtotalAmount} />
             </div>
           </div>
         </div>

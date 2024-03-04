@@ -5,14 +5,9 @@ import Link from 'next/link';
 import Image, { StaticImageData } from 'next/image';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  IconMenu,
-  Button,
-  IconChevron,
-  IconClose,
-  IconSearch,
-} from '@/components/ui';
+import { IconMenu, Button, IconChevron, IconClose } from '@/components/ui';
 import { CartIcon } from '@/components/cart';
+import { SearchIcon } from '@/components/search';
 import { Menu as MenuType, MenuItem } from '@/types/storefront';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getRelativeUrl, isActiveLink } from '@/utils/helpers';
@@ -43,6 +38,7 @@ const SubMenuLink: React.FC<SubMenuLinkProps> = ({ item, closeSubMenu }) => {
             const relUrl = getRelativeUrl(subItem.url);
             return (
               <Link
+                key={subItem.id}
                 className="flex justify-left border border-solid text-base py-2 pl-3.5"
                 href={relUrl}
               >
@@ -182,7 +178,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
 
   return (
     <div ref={ref}>
-      <div className="flex justify-between px-2.5">
+      <div className="flex justify-between px-2.5 py-4">
         <Link href="/">
           <div className="aspect-video relative max-h-[50px]">
             <Image
@@ -195,7 +191,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
           </div>
         </Link>
         <div className="flex items-center gap-3">
-          <IconSearch />
+          <SearchIcon />
           <CartIcon count={cartCount} />
           <Button isUnstyled onClick={toggleMenu}>
             {showMenu ? <IconClose /> : <IconMenu />}

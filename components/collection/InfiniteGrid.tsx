@@ -40,7 +40,7 @@ const InfiniteGrid: React.FC<Props> = ({ data }) => {
         loader={<Spinner />}
         style={{ overflow: 'hidden' }}
       >
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 gap-x-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-5 gap-x-5 md:gap-y-6 md:gap-x-8 lg:gap-y-8 lg:gap-x-12">
           {collection.products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

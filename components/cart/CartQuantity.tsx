@@ -21,7 +21,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
   }, [pending, setIsLoading]);
   return (
     <Button
-      className="hover:opacity-hover"
+      className="hover:opacity-hover p-2"
       isSubmit
       isUnstyled
       disabled={pending}
@@ -41,7 +41,7 @@ const Quantity: React.FC<QuantityProps> = ({ lineItem }) => {
   return (
     <div
       className={clsx(
-        'flex [&>*:nth-child(odd)]:p-2 items-center border rounded-[4px] border-primary',
+        'flex items-center border rounded-[4px] border-primary',
         isLoading && 'cursor-not-allowed'
       )}
     >

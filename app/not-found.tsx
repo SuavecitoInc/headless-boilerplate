@@ -21,14 +21,16 @@ export default function NotFound() {
           </Link>
         </div>
         <div className="mx-auto mt-5 md:m-0">
-          <Image
-            src={Caravaggio}
-            width={286}
-            height={599}
-            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            alt="Rachel's cute cat"
-            priority
-          />
+          <div className="relative aspect-[9/16] min-h-[410px] md:min-h-[520px]">
+            <Image
+              src={Caravaggio}
+              fill
+              className="object-contain w-auto h-auto"
+              sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              alt="Rachel's cute cat"
+              priority
+            />
+          </div>
         </div>
       </div>
     </main>

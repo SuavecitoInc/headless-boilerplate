@@ -1,12 +1,13 @@
 'use server';
 
 import { fetchStorefront } from '@/utils/server';
+import { headerHandle } from '@/data/shop';
 import { Menu as MenuType } from '@/types/storefront';
 import { MENU_QUERY } from '@/data/storefront';
 
 export const getMenu = async (): Promise<MenuType | null> => {
   try {
-    const menuName = 'next-header';
+    const menuName = headerHandle ?? 'main-menu';
     const { data } = await fetchStorefront({
       query: MENU_QUERY,
       variables: { handle: menuName },

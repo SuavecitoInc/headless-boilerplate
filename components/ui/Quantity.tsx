@@ -35,14 +35,37 @@ const Quantity: React.FC<QuantityProps> = ({
   }, [currentQuantity, setQuantity]);
 
   return (
-    <div className={clsx('flex items-center gap-4', className)}>
-      <Button isUnstyled onClick={decrement} aria-label="Decrement quantity">
-        <IconMinus />
-      </Button>
-      <span>{currentQuantity}</span>
-      <Button isUnstyled onClick={increment} aria-label="Increment quantity">
-        <IconPlus />
-      </Button>
+    <div className="flex">
+      <div
+        className={clsx(
+          'flex items-center border rounded-[4px] border-primary',
+          className
+        )}
+      >
+        <div className="border-r border-primary">
+          <Button
+            isUnstyled
+            onClick={decrement}
+            aria-label="Decrement quantity"
+            className="p-2"
+          >
+            <IconMinus size="14" />
+          </Button>
+        </div>
+        <div className="min-w-[45px] mx-auto text-center w-full">
+          <span className="px-2.5 text-sm">{currentQuantity}</span>
+        </div>
+        <div className="border-l border-primary">
+          <Button
+            isUnstyled
+            onClick={increment}
+            aria-label="Increment quantity"
+            className="p-2"
+          >
+            <IconPlus size="14" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

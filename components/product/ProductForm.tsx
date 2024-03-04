@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useProduct } from '@/contexts/Product';
-import { AddToCart, Quantity, Money } from '@/components/ui';
+import { Quantity, Money } from '@/components/ui';
+import { AddToCart } from '@/components/cart';
 
 const ProductForm: React.FC = () => {
   const { selectedVariant } = useProduct();
