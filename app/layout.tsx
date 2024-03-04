@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { Header } from '@/components';
+import { Header, Footer } from '@/components';
 import { layoutClassNames } from '@/styles';
 import { title } from '@/data/shop';
+import Loading from './loading';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <div className={layoutClassNames}>{children}</div>
+        <div className={layoutClassNames}>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </div>
+        <Footer />
       </body>
     </html>
   );

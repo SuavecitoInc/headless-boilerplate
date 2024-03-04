@@ -1,5 +1,6 @@
 interface ShopConfig {
   title: string;
+  description: string;
   logoUrl: string;
   apiToken: string;
   schemaUrl: string;
@@ -14,6 +15,7 @@ const {
 
 const shopConfig: ShopConfig = {
   title: 'Headless Boilerplate Shop',
+  description: 'A headless Shopify store built with Next.js and Shopify',
   logoUrl: '/path/to/logo.png',
   headerHandle: '',
   footerHandle: '',
@@ -24,4 +26,4 @@ const shopConfig: ShopConfig = {
 
 // Export the whole config object or individual properties
 export default shopConfig;
-export const { title, logoUrl } = shopConfig;
+export const { title, logoUrl, description } = shopConfig;

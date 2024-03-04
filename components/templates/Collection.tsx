@@ -11,7 +11,7 @@ const Collection: React.FC<Props> = ({ data }) => {
   const { title } = data;
   return (
     <div>
-      <Heading type="h1" className="mb-2.5">
+      <Heading type="h1" className="mb-2.5 md:mb-4">
         {title}
       </Heading>
       <InfiniteGrid data={data} />

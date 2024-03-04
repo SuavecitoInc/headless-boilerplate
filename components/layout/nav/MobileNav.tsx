@@ -38,6 +38,7 @@ const SubMenuLink: React.FC<SubMenuLinkProps> = ({ item, closeSubMenu }) => {
             const relUrl = getRelativeUrl(subItem.url);
             return (
               <Link
+                key={subItem.id}
                 className="flex justify-left border border-solid text-base py-2 pl-3.5"
                 href={relUrl}
               >
@@ -177,7 +178,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
 
   return (
     <div ref={ref}>
-      <div className="flex justify-between px-2.5">
+      <div className="flex justify-between px-2.5 py-4">
         <Link href="/">
           <div className="aspect-video relative max-h-[50px]">
             <Image

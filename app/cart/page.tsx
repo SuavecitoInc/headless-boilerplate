@@ -1,11 +1,12 @@
 import React from 'react';
+import { title as siteTitle } from '@/data/shop';
 import { Cart as CartTemplate } from '@/components/templates';
 import { getCart } from './actions';
 
 export const dynamic = 'force-dynamic';
 
 export const generateMetadata = () => ({
-  title: `Cart`,
+  title: `Cart | ${siteTitle}`,
 });
 
 export default async function Page() {

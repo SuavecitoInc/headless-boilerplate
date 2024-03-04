@@ -58,7 +58,7 @@ const Search: React.FC<Props> = ({ query }) => {
 
           <SearchFilters className="md:block hidden" />
 
-          <Divider className="my-6" />
+          <Divider className="my-6 md:hidden" />
           <div className="flex flex-col justify-center">
             <Hits
               hitComponent={AutoHit}

@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { addToCart } from '@/app/cart/actions';
-import Button, { ButtonProps } from './Button';
-import Spinner from './Spinner';
+import { CartLine } from '@/types/storefront';
+import Button, { ButtonProps } from '@/components/ui/Button';
+import Spinner from '@/components/ui/Spinner';
+import { CartToast } from '@/components/toast';
 
 type AddToCartButtonProps = Omit<ButtonProps, 'children'> & {
   disabled: boolean;
@@ -44,13 +46,25 @@ const AddToCart: React.FC<AddToCartProps> = ({
   availableForSale,
   ...props
 }) => {
+  const [addedProduct, setAddedProduct] = useState<CartLine | null>(null);
   const cartInput = [{ merchandiseId, quantity }];
 
   const disabled = props.disabled || !availableForSale;
   return (
-    <form action={() => addToCart(cartInput)}>
-      <AddToCartButton {...props} disabled={disabled} />
-    </form>
+    <>
+      <CartToast
+        addedProduct={addedProduct}
+        setAddedProduct={setAddedProduct}
+      />
+      <form
+        action={async () => {
+          const added = await addToCart(cartInput);
+          setAddedProduct(added);
+        }}
+      >
+        <AddToCartButton {...props} disabled={disabled} />
+      </form>
+    </>
   );
 };
 

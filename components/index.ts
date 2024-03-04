@@ -5,3 +5,4 @@ export * from './cart';
 export * from './product';
 export * from './collection';
 export * from './search';
+export * from './toast';

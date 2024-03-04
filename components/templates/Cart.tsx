@@ -16,16 +16,14 @@ const CartTemplate: React.FC<CartTemplateProps> = ({ cart }) => {
     <div>
       <Heading type="h1">Your Cart</Heading>
       <Divider className="my-[15px]" />
-      <div className="mx-auto max-w-screen-xl md:px-4">
-        {isEmpty ? (
-          <CartEmpty />
-        ) : (
-          <>
-            <CartLines lineItems={lines} />
-            <CartSummary cart={cart} />
-          </>
-        )}
-      </div>
+      {isEmpty ? (
+        <CartEmpty />
+      ) : (
+        <>
+          <CartLines lineItems={lines} />
+          <CartSummary cart={cart} />
+        </>
+      )}
     </div>
   );
 };

@@ -10,6 +10,8 @@ export const PRODUCT_PAGE_QUERY = `#graphql
       description
       descriptionHtml
       productType
+      availableForSale
+      tags
       featuredImage {
         url
         altText
@@ -60,3 +62,14 @@ export const PRODUCT_PAGE_QUERY = `#graphql
     }
   }
 `;
+
+export const PRODUCT_SEO_QUERY = `#graphql
+  query getProductSEO($handle: String!) {
+    product(handle: $handle) {
+      title
+      description
+      featuredImage {
+        url
+      }
+    }
+  }`;

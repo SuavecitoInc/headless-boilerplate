@@ -38,7 +38,7 @@ const Quantity: React.FC<QuantityProps> = ({
     <div className="flex">
       <div
         className={clsx(
-          'flex [&>*:nth-child(odd)]:p-2 items-center border rounded-[4px] border-primary',
+          'flex items-center border rounded-[4px] border-primary',
           className
         )}
       >
@@ -47,6 +47,7 @@ const Quantity: React.FC<QuantityProps> = ({
             isUnstyled
             onClick={decrement}
             aria-label="Decrement quantity"
+            className="p-2"
           >
             <IconMinus size="14" />
           </Button>
@@ -59,6 +60,7 @@ const Quantity: React.FC<QuantityProps> = ({
             isUnstyled
             onClick={increment}
             aria-label="Increment quantity"
+            className="p-2"
           >
             <IconPlus size="14" />
           </Button>

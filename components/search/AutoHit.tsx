@@ -4,12 +4,12 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui';
 import Image from 'next/image';
-// import { ProductHit } from '@/types/algolia';
+import { ProductHit } from '@/types/algolia';
 import { useAutocomplete } from '@/contexts/Autocomplete';
 import { formatMoney } from '@/utils/helpers';
 
 type Props = {
-  hit: any;
+  hit: ProductHit;
 };
 
 const AutoHit: React.FC<Props> = ({ hit }) => {
@@ -34,6 +34,7 @@ const AutoHit: React.FC<Props> = ({ hit }) => {
                 alt={hit.title ?? 'Product Image'}
                 fill
                 sizes="(max-width: 768px) 300px, 40vw"
+                className="h-auto w-auto object-contain"
               />
             </div>
           )}

@@ -1,17 +1,41 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { title as siteTitle } from '@/data/shop';
 import { Collection as CollectionTemplate } from '@/components';
-import { COLLECTION_QUERY } from '@/data/storefront';
+import { COLLECTION_QUERY, COLLECTION_SEO_QUERY } from '@/data/storefront';
 import { PAGINATION_SIZE } from '@/data/consts';
 import type { Collection as CollectionType } from '@/types/storefront';
 import { fetchStorefront } from '@/utils/server';
 
 export const dynamic = 'force-dynamic';
 
-type PageProps = {
-  params: {
-    handle: string;
-  };
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
+  try {
+    const { handle } = params;
+    const { data } = await fetchStorefront({
+      query: COLLECTION_SEO_QUERY,
+      variables: { handle },
+    });
+    const { collection }: { collection: CollectionType } = data;
+    if (!collection) {
+      return {};
+    }
+    const { title, description } = collection;
+    return {
+      title: `${title} | ${siteTitle}`,
+      description,
+      openGraph: {
+        title: `${title} | ${siteTitle}`,
+        description,
+        images: collection.image ? [{ url: collection.image.url }] : [],
+      },
+    };
+  } catch (error) {
+    return {};
+  }
 };
 
 const getData = async (handle: string) => {
@@ -29,6 +53,12 @@ const getData = async (handle: string) => {
   } catch (error) {
     return null;
   }
+};
+
+type PageProps = {
+  params: {
+    handle: string;
+  };
 };
 
 export default async function Page({ params }: PageProps) {
