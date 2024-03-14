@@ -153,6 +153,12 @@ export const addToCart = async (
     return addedLine;
   } catch (e) {
     // captureError(e);
+    // probably invalid cart, create a new one
+    const cart = await createCart();
+    if (!cart) throw new Error('Cart not created');
+    const { id } = cart;
+    createCookie(id);
+    addToCart(lines);
     return null;
   }
 };

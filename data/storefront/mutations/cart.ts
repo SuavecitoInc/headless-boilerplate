@@ -1,10 +1,11 @@
 import { CART_FRAGMENT } from '../fragments';
 
 export const CART_CREATE_QUERY = `#graphql
+  ${CART_FRAGMENT}
   mutation cartCreate($input: CartInput!) {
     cartCreate(input: $input) {
       cart {
-        id
+        ...Cart
       }
       userErrors {
         field
