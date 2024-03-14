@@ -29,23 +29,25 @@ const LastItemAdded: React.FC<LastItemAddedProps> = ({ lineItem }) => {
         </div>
       </div>
       <div className="flex-1">
-        <div className="flex items-center justify-between flex-wrap">
-          <span className="text-md font-bold leading-normal text-primary md:text-lg">
-            {merchandise.product.title}
-          </span>
-          <div className="mb-[10px] flex flex-col gap-[1px] text-sm leading-tight md:text-base">
-            {merchandise.selectedOptions
-              .filter(
-                (option) =>
-                  option.name !== 'Title' && option.value !== 'Default Title'
-              )
-              .map((option) => (
-                <div key={option.name}>
-                  <span>
-                    {option.name}: {option.value}
-                  </span>
-                </div>
-              ))}
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-md font-bold leading-normal text-primary md:text-lg">
+              {merchandise.product.title}
+            </span>
+            <div className="mb-[10px] flex flex-col gap-[1px] text-sm leading-tight md:text-base">
+              {merchandise.selectedOptions
+                .filter(
+                  (option) =>
+                    option.name !== 'Title' && option.value !== 'Default Title'
+                )
+                .map((option) => (
+                  <div key={option.name}>
+                    <span>
+                      {option.name}: {option.value}
+                    </span>
+                  </div>
+                ))}
+            </div>
           </div>
           <div>
             <span className="text-sm">Qty: {lineItem.quantity}</span>
@@ -94,7 +96,7 @@ const CartToast: React.FC<CartToastProps> = ({
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -50 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+          transition={{ type: 'spring', stiffness: 180, damping: 26 }}
           className="fixed right-0 top-0 z-50 mx-auto w-full border border-suaveGrey bg-white px-3 py-3 shadow-lg md:max-w-[420px]"
         >
           <div className="flex h-full w-full justify-between">
