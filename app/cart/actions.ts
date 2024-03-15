@@ -21,10 +21,16 @@ import {
 
 const CART_COOKIE_NAME = 'cartId';
 
+// 30 days
+const MAX_AGE = 60 * 60 * 24 * 30;
+
 export const createCookie = (id: string) => {
   try {
     const cookieStore = cookies();
-    cookieStore.set(CART_COOKIE_NAME, id);
+    cookieStore.set(CART_COOKIE_NAME, id, {
+      path: '/',
+      maxAge: MAX_AGE,
+    });
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Error on createCookie', e);
@@ -140,8 +146,13 @@ export const addToCart = async (
       query: CART_LINES_ADD_QUERY,
       variables: { cartId, lines },
     });
+    if (!data || !data.cartLinesAdd) throw new Error('Cart not found');
     const { cartLinesAdd } = data;
     const { cart } = cartLinesAdd;
+    if (cart.id !== cartId) {
+      // set new cart id
+      createCookie(cart.id);
+    }
     if (!cart) throw new Error('Cart not found');
     const firstLine = lines[0];
     const lineItems = flattenConnection(cart.lines) as CartLine[];
@@ -158,7 +169,8 @@ export const addToCart = async (
     if (!cart) throw new Error('Cart not created');
     const { id } = cart;
     createCookie(id);
-    addToCart(lines);
+    revalidateTag('cart');
+    await addToCart(lines);
     return null;
   }
 };
