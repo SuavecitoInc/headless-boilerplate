@@ -25,7 +25,7 @@ const SubMenuLink: React.FC<SubMenuLinkProps> = ({ item, closeSubMenu }) => {
       <Button
         isUnstyled
         onClick={handleClick}
-        className="flex justify-left border border-solid text-base items-center"
+        className="justify-left flex items-center border border-solid text-base"
       >
         <div className="border-r p-2.5">
           <IconChevron direction="left" />
@@ -39,7 +39,7 @@ const SubMenuLink: React.FC<SubMenuLinkProps> = ({ item, closeSubMenu }) => {
             return (
               <Link
                 key={subItem.id}
-                className="flex justify-left border border-solid text-base py-2 pl-3.5"
+                className="justify-left flex border border-solid py-2 pl-3.5 text-base"
                 href={relUrl}
               >
                 <span>{subItem.title}</span>
@@ -92,51 +92,41 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 }) => {
   const closeSubMenu = () => setActiveItem(null);
 
-  const menuVariants = {
-    hidden: {
-      x: '-100%',
-      opacity: 0,
-      transition: { duration: 0.45, ease: [0.29, 0.63, 0.44, 1] },
-    },
-    visible: {
-      x: '0%',
+  const variants = {
+    start: {
       opacity: 1,
-      transition: { duration: 0.45, ease: [0.29, 0.63, 0.44, 1] },
     },
-  };
-
-  const activeItemVariants = {
-    hidden: {
-      x: '100%',
-      opacity: 0,
-      transition: { duration: 0.45, ease: [0.29, 0.63, 0.44, 1] },
-    },
-    visible: {
-      x: '0%',
+    enterFromRight: {
+      x: 0,
       opacity: 1,
-      transition: { duration: 0.45, ease: [0.29, 0.63, 0.44, 1] },
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
+    },
+    exitToLeft: {
+      x: '-50%',
+      opacity: 0,
+      transition: { duration: 0.3, type: 'tween' },
+    },
+    enterFromLeft: {
+      x: 0,
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
+    },
+    exitToRight: {
+      x: '50%',
+      opacity: 0,
+      transition: { duration: 0.3, type: 'tween' },
     },
   };
 
   return (
     <AnimatePresence mode="wait">
-      {activeItem ? (
-        <motion.div
-          key="activeItem"
-          variants={activeItemVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-        >
-          <SubMenuLink item={activeItem} closeSubMenu={closeSubMenu} />
-        </motion.div>
-      ) : (
+      {!activeItem && (
         <motion.div
           key="subMenu"
-          variants={menuVariants}
-          initial="visible" // Make sure it's visible initially
-          animate="visible" // Stay visible when it's the only content
-          exit="hidden" // Slide and fade out when exiting
+          variants={variants}
+          initial="start"
+          animate={activeItem ? 'exitToLeft' : 'enterFromRight'}
+          exit="exitToLeft"
         >
           <div className="flex flex-col">
             {items.map((item) => (
@@ -147,6 +137,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               />
             ))}
           </div>
+        </motion.div>
+      )}
+
+      {activeItem && (
+        <motion.div
+          key="activeItem"
+          variants={variants}
+          initial="exitToRight"
+          animate={activeItem ? 'enterFromLeft' : 'exitToRight'}
+          exit="exitToRight"
+        >
+          <SubMenuLink item={activeItem} closeSubMenu={closeSubMenu} />
         </motion.div>
       )}
     </AnimatePresence>
@@ -163,7 +165,12 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
-  const toggleMenu = () => setShowMenu(!showMenu);
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+    if (!showMenu) {
+      setActiveItem(null);
+    }
+  };
 
   // navigation event for closing the menu on route change
   useEffect(() => {
@@ -180,7 +187,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ menu, cartCount, logo }) => {
     <div ref={ref}>
       <div className="flex justify-between px-2.5 py-4">
         <Link href="/">
-          <div className="aspect-video relative max-h-[50px]">
+          <div className="relative aspect-video max-h-[50px]">
             <Image
               src={logo}
               alt="logo"
