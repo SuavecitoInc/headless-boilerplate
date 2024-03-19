@@ -38,7 +38,7 @@ export const createCookie = (id: string) => {
   }
 };
 
-export const getCookie = () => {
+export const getCookie = async () => {
   try {
     const cookieStore = cookies();
     const cartCookie = cookieStore.get(CART_COOKIE_NAME);
@@ -71,7 +71,7 @@ export const createCart = async (): Promise<CartType | null> => {
 
 export const initializeCartId = async () => {
   try {
-    const cartId = getCookie();
+    const cartId = await getCookie();
     if (cartId) {
       return cartId;
     }
@@ -88,7 +88,7 @@ export const initializeCartId = async () => {
 
 export const getCart = async () => {
   try {
-    const id = getCookie();
+    const id = await getCookie();
     if (!id) {
       throw new Error('Cart not found');
     }
@@ -122,7 +122,7 @@ export const getCurrentCartQuantity = async (id: string): Promise<number> => {
 
 export const getCartCount = async () => {
   try {
-    const cartId = getCookie();
+    const cartId = await getCookie();
     if (!cartId) {
       return 0;
     }
@@ -177,7 +177,7 @@ export const addToCart = async (
 
 export const updateCart = async (lines: CartLineUpdateInput[]) => {
   try {
-    const id = getCookie();
+    const id = await getCookie();
     if (!id) {
       throw new Error('Cart not found');
     }
@@ -197,7 +197,7 @@ export const updateCart = async (lines: CartLineUpdateInput[]) => {
 
 export const removeCart = async (lineIds: string[]) => {
   try {
-    const id = getCookie();
+    const id = await getCookie();
     if (!id) {
       throw new Error('Cart not found');
     }
