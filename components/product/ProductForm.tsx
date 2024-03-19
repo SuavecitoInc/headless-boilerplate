@@ -11,11 +11,17 @@ const ProductForm: React.FC = () => {
 
   return (
     <div>
-      <div className="mb-2.5">
+      <div className="mb-2.5 flex flex-wrap gap-x-2 gap-y-1">
         <Money
           className="text-[26px] font-bold md:text-[30px]"
           data={selectedVariant.price}
         />
+        {selectedVariant.compareAtPrice && (
+          <Money
+            className="text-[26px] font-bold text-zinc-400 line-through md:text-[30px]"
+            data={selectedVariant.compareAtPrice}
+          />
+        )}
       </div>
       <Quantity
         currentQuantity={quantity}
