@@ -61,12 +61,6 @@ export const createCart = async (
 ): Promise<CartType | null> => {
   try {
     const input: CartInput = {
-      attributes: [
-        {
-          key: 'storefront',
-          value: 'prospectors',
-        },
-      ],
       ...extraInput,
     };
     const { data } = await fetchStorefront<{
