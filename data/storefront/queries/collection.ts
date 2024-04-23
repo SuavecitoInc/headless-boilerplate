@@ -1,4 +1,7 @@
+import { PRODUCT_FRAGMENT } from '../fragments';
+
 export const COLLECTION_QUERY = `#graphql
+ ${PRODUCT_FRAGMENT}
   query getCollectionByHandle($handle: String!, $pageBy: Int!, $cursor: String) {
     collection(handle: $handle) {
       id
@@ -6,32 +9,7 @@ export const COLLECTION_QUERY = `#graphql
       handle
       products(first: $pageBy, after: $cursor) {
         nodes {
-          id
-          title
-          handle
-          featuredImage {
-            url
-            altText
-          }
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-            maxVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-          variants(first: 1) {
-            nodes {
-              id
-              price {
-                amount
-                currencyCode
-              }
-            }
-          }
+         ...Product
         }
         pageInfo { 
           hasNextPage

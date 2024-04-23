@@ -16,19 +16,24 @@
  *
  */
 
+type FetchStorefrontResponse<T> = {
+  data: T;
+  errors?: any;
+};
+
 type FetchStorefront = {
   query: string;
   variables?: any;
-  shouldCache?: boolean;
+  cache?: boolean;
   tag?: string;
 };
 
-export async function fetchStorefront({
+export async function fetchStorefront<T>({
   query,
   variables,
-  shouldCache = true,
+  cache = false,
   tag,
-}: FetchStorefront) {
+}: FetchStorefront): Promise<FetchStorefrontResponse<T>> {
   try {
     const {
       SHOPIFY_STOREFRONT_SCHEMA_URL: schemaUrl,
@@ -45,7 +50,7 @@ export async function fetchStorefront({
         query,
         variables,
       }),
-      cache: shouldCache ? 'default' : 'no-cache',
+      cache: cache ? 'default' : 'no-cache',
       next: tag
         ? {
             tags: [tag],
@@ -54,6 +59,7 @@ export async function fetchStorefront({
     });
 
     const data = await response.json();
+
     if (data.errors) {
       throw new Error(data.errors[0].message);
     }
@@ -61,7 +67,7 @@ export async function fetchStorefront({
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    return data;
+    return data as FetchStorefrontResponse<T>;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching data from Shopify API:', error);

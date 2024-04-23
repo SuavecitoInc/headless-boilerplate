@@ -15,11 +15,13 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
   try {
     const { handle } = params;
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      collection: CollectionType;
+    }>({
       query: COLLECTION_SEO_QUERY,
       variables: { handle },
     });
-    const { collection }: { collection: CollectionType } = data;
+    const { collection } = data;
     if (!collection) {
       return {};
     }
@@ -40,11 +42,13 @@ export const generateMetadata = async ({
 
 const getData = async (handle: string) => {
   try {
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      collection: CollectionType;
+    }>({
       query: COLLECTION_QUERY,
       variables: { handle, pageBy: PAGINATION_SIZE, cursor: null },
     });
-    const { collection }: { collection: CollectionType } = data;
+    const { collection } = data;
 
     if (!collection) {
       return null;

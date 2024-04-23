@@ -9,6 +9,10 @@ import type {
   CartLineInput,
   CartLineUpdateInput,
   CartLine,
+  CartCreatePayload,
+  CartLinesAddPayload,
+  CartLinesRemovePayload,
+  CartInput,
 } from '@/types/storefront';
 import {
   CART_GET_QUERY,
@@ -17,6 +21,7 @@ import {
   CART_LINES_UPDATE_QUERY,
   CART_LINES_REMOVE_QUERY,
   CART_GET_COUNT_QUERY,
+  CART_DISCOUNT_CODES_UPDATE_QUERY,
 } from '@/data/storefront';
 
 const CART_COOKIE_NAME = 'cartId';
@@ -51,12 +56,25 @@ export const getCookie = async () => {
   }
 };
 
-export const createCart = async (): Promise<CartType | null> => {
+export const createCart = async (
+  extraInput?: any
+): Promise<CartType | null> => {
   try {
-    const { data } = await fetchStorefront({
+    const input: CartInput = {
+      attributes: [
+        {
+          key: 'storefront',
+          value: 'prospectors',
+        },
+      ],
+      ...extraInput,
+    };
+    const { data } = await fetchStorefront<{
+      cartCreate: CartCreatePayload;
+    }>({
       query: CART_CREATE_QUERY,
       variables: {
-        input: {},
+        input,
       },
     });
     const { cartCreate } = data;
@@ -92,7 +110,9 @@ export const getCart = async () => {
     if (!id) {
       throw new Error('Cart not found');
     }
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      cart: CartType;
+    }>({
       query: CART_GET_QUERY,
       variables: { id },
       tag: 'cart',
@@ -107,7 +127,9 @@ export const getCart = async () => {
 
 export const getCurrentCartQuantity = async (id: string): Promise<number> => {
   try {
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      cart: CartType;
+    }>({
       query: CART_GET_COUNT_QUERY,
       variables: { id },
       tag: 'cart',
@@ -142,16 +164,19 @@ export const addToCart = async (
   try {
     const cartId = await initializeCartId();
     if (!cartId) throw new Error('Cart not found');
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      cartLinesAdd: CartLinesAddPayload;
+    }>({
       query: CART_LINES_ADD_QUERY,
       variables: { cartId, lines },
     });
-    if (!data || !data.cartLinesAdd) throw new Error('Cart not found');
+    if (!data || !data.cartLinesAdd || !data.cartLinesAdd.cart)
+      throw new Error('Cart not found');
     const { cartLinesAdd } = data;
     const { cart } = cartLinesAdd;
-    if (cart.id !== cartId) {
+    if (cart!.id !== cartId) {
       // set new cart id
-      createCookie(cart.id);
+      createCookie(cart!.id);
     }
     if (!cart) throw new Error('Cart not found');
     const firstLine = lines[0];
@@ -181,7 +206,9 @@ export const updateCart = async (lines: CartLineUpdateInput[]) => {
     if (!id) {
       throw new Error('Cart not found');
     }
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      cartLinesUpdate: CartLinesAddPayload;
+    }>({
       query: CART_LINES_UPDATE_QUERY,
       variables: { cartId: id, lines },
     });
@@ -201,8 +228,9 @@ export const removeCart = async (lineIds: string[]) => {
     if (!id) {
       throw new Error('Cart not found');
     }
-
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      cartLinesRemove: CartLinesRemovePayload;
+    }>({
       query: CART_LINES_REMOVE_QUERY,
       variables: { cartId: id, lineIds },
     });
@@ -213,5 +241,30 @@ export const removeCart = async (lineIds: string[]) => {
   } catch (e) {
     // captureError(e);
     return null;
+  }
+};
+
+export const handleDiscount = async (code: string) => {
+  try {
+    if (!code || code === '') return;
+
+    const cart = await getCart();
+    if (!cart) {
+      await createCart({
+        discountCodes: [code],
+      });
+      return;
+    }
+    const { id } = cart;
+    const input = {
+      cartId: id,
+      discountCodes: [code],
+    };
+    await fetchStorefront({
+      query: CART_DISCOUNT_CODES_UPDATE_QUERY,
+      variables: input,
+    });
+  } catch (error) {
+    /* empty */
   }
 };

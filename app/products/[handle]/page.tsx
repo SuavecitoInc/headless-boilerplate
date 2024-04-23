@@ -16,11 +16,13 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
   try {
     const { handle } = params;
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      product: ProductType;
+    }>({
       query: PRODUCT_SEO_QUERY,
       variables: { handle },
     });
-    const { product }: { product: ProductType } = data;
+    const { product } = data;
     if (!product) {
       return {};
     }
@@ -43,11 +45,13 @@ export const generateMetadata = async ({
 
 const getData = async (handle: string) => {
   try {
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      product: ProductType;
+    }>({
       query: PRODUCT_PAGE_QUERY,
       variables: { handle },
     });
-    const { product }: { product: ProductType } = data;
+    const { product } = data;
     if (!product) {
       return null;
     }

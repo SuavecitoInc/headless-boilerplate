@@ -14,7 +14,7 @@ type FeaturedMediaProps = {
 };
 const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ featuredMedia }) => (
   <div className="relative flex aspect-product items-center justify-center">
-    {featuredMedia.image && (
+    {featuredMedia && featuredMedia.image ? (
       <Image
         priority
         src={featuredMedia.image.url}
@@ -23,6 +23,8 @@ const FeaturedMedia: React.FC<FeaturedMediaProps> = ({ featuredMedia }) => (
         className="h-auto w-auto object-contain"
         sizes="(max-width: 768px) 700px, 400px"
       />
+    ) : (
+      <Placeholder />
     )}
   </div>
 );
