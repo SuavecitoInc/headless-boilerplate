@@ -3,14 +3,20 @@
 /**
  * Asynchronously fetches data from a Shopify storefront API.
  *
- * This function constructs a request to Shopify's GraphQL API using provided query and variables. It allows for optional caching of the response and tagging of requests for more granular cache control. The Shopify API credentials and details (API token, storefront name, and API version) are read from environment variables.
+ * This function constructs a request to Shopify's GraphQL API using provided query and variables.
+ * It is generic and allows specifying the expected response type `<T>`, which corresponds to the
+ * expected shape of the data returned by the storefront API. The function supports optional
+ * caching of the response and tagging of requests for more granular cache control. The Shopify
+ * API credentials and details (API token, storefront name, and API version) are read from
+ * environment variables.
  *
  * @param {FetchStorefront} params - An object containing the necessary parameters for the fetch operation:
  * - `query`: A string representing the GraphQL query.
  * - `variables`: An optional parameter for any variables required by the GraphQL query.
  * - `shouldCache`: An optional boolean flag indicating whether the response should be cached (`true` by default).
  * - `tag`: An optional string for tagging the request for data validation purposes.
- * @returns {Promise<any>} A promise that resolves with the JSON response from the Shopify API.
+ * @returns {Promise<FetchStorefrontResponse<T>>} A promise that resolves with the JSON response from the Shopify API,
+ * where `<T>` defines the type of the data in the response, aligning with the expected storefront data structure.
  *
  * @throws {Error} Throws an error if there is an issue with fetching data from the Shopify API or if the response status is not OK.
  *
