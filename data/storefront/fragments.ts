@@ -45,6 +45,18 @@ export const CART_FRAGMENT = `#graphql
     updatedAt
     checkoutUrl
     totalQuantity
+    discountAllocations {
+      discountedAmount {
+        amount
+        currencyCode
+      }
+      ... on CartDiscountAllocation {
+        discountedAmount {
+          amount
+          currencyCode
+        }
+      }
+    }
     lines(first: 250) {
       edges {
         node {
@@ -128,6 +140,37 @@ export const CART_FRAGMENT = `#graphql
       totalDutyAmount {
         amount
         currencyCode
+      }
+    }
+  }
+`;
+
+export const PRODUCT_FRAGMENT = `#graphql
+  fragment Product on Product {
+    id
+    title
+    handle
+    featuredImage {
+      url
+      altText
+    }
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        price {
+          amount
+          currencyCode
+        }
       }
     }
   }

@@ -14,11 +14,13 @@ export const getMoreProducts = async (
   cursor: string | null
 ) => {
   try {
-    const { data } = await fetchStorefront({
+    const { data } = await fetchStorefront<{
+      collection: CollectionType;
+    }>({
       query: COLLECTION_QUERY,
       variables: { handle, pageBy: PAGINATION_SIZE, cursor },
     });
-    const { collection }: { collection: CollectionType } = data;
+    const { collection } = data;
     const { products }: { products: ProductConnection } = collection;
     const { pageInfo } = products;
     const { endCursor, hasNextPage } = pageInfo;

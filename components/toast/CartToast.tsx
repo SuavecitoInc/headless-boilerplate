@@ -121,8 +121,7 @@ const CartToast: React.FC<CartToastProps> = ({
                   onClick={() => handleNavigate('/cart')}
                   className="px-9"
                 >
-                  <span className="uppercase">View Cart </span>
-                  {/* <span className="ml-2">({totalQuantity})</span> */}
+                  <span className="uppercase">View Cart</span>
                 </Button>
               </div>
               <Button

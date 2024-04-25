@@ -59,3 +59,18 @@ export const CART_LINES_REMOVE_QUERY = `#graphql
     }
   }
 `;
+
+export const CART_DISCOUNT_CODES_UPDATE_QUERY = `#graphql
+  ${CART_FRAGMENT}
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        ...Cart
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Divider, Placeholder, Money } from '@/components/ui';
 import { CartLine } from '@/types/storefront';
+import { formatMoney } from '@/utils/helpers';
 import CartQuantity from './CartQuantity';
 import CartRemove from './CartRemove';
 
@@ -12,16 +13,22 @@ type CartLineItemProps = {
   lineItem: CartLine;
 };
 const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
-  const { merchandise } = lineItem;
+  const { merchandise, discountAllocations } = lineItem;
   const variantId = merchandise.id.replace('gid://shopify/ProductVariant/', '');
   const link = `/products/${merchandise.product.handle}?variant=${variantId}`;
   const hasOptions =
     merchandise.selectedOptions && merchandise.selectedOptions.length > 0;
+  const hasDiscounts = discountAllocations && discountAllocations.length > 0;
+  const compareAtTotal = lineItem.cost.compareAtAmountPerQuantity
+    ? Number(
+        lineItem.cost.compareAtAmountPerQuantity.amount * lineItem.quantity
+      )
+    : 0;
   return (
     <div className="flex gap-2 md:gap-8">
       <Link
         href={link}
-        className="relative aspect-product h-full w-full max-w-[35%] md:max-w-[200px] hover:opacity-hover"
+        className="relative aspect-product h-full w-full max-w-[35%] hover:opacity-hover md:max-w-[200px]"
       >
         {merchandise.image ? (
           <Image
@@ -35,10 +42,10 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
           <Placeholder />
         )}
       </Link>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-1 flex-col">
         <div className="mb-[5px] md:mb-[10px]">
           <Link href={link}>
-            <span className="text-copy font-bold leading-normal md:text-[22px] hover:opacity-hover">
+            <span className="text-copy font-bold leading-normal hover:opacity-hover md:text-[22px]">
               {merchandise.product.title}
             </span>
           </Link>
@@ -64,13 +71,60 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
             )}
             <CartRemove lineItem={lineItem} />
           </div>
-          <div className="flex flex-col lg:gap-6 items-end gap-2 justify-end lg:items-baseline lg:flex-row">
-            <div className="leading-normal md:text-[18px]">
-              <Money data={lineItem.cost.amountPerQuantity} />
+          <div className="flex flex-col items-end justify-end gap-2 lg:flex-row lg:items-baseline lg:gap-6">
+            <div className="flex items-center justify-center gap-1 leading-normal md:text-[18px]">
+              {hasDiscounts ? (
+                <>
+                  <Money data={discountAllocations[0].discountedAmount} />
+                  <Money
+                    data={lineItem.cost.amountPerQuantity}
+                    strikethrough
+                    className="text-tertiary"
+                  />
+                </>
+              ) : (
+                <>
+                  <Money data={lineItem.cost.amountPerQuantity} />
+                  {lineItem.cost.compareAtAmountPerQuantity && (
+                    <Money
+                      data={lineItem.cost.compareAtAmountPerQuantity}
+                      strikethrough
+                      className="text-tertiary"
+                    />
+                  )}
+                </>
+              )}
             </div>
             <CartQuantity lineItem={lineItem} />
-            <div className="font-bold leading-normal md:text-[18px]">
-              <Money data={lineItem.cost.subtotalAmount} />
+            <div className="flex items-center gap-1 font-bold leading-normal md:text-[18px]">
+              {Number(lineItem.cost.totalAmount.amount) <
+              Number(lineItem.cost.subtotalAmount.amount) ? (
+                <>
+                  <Money data={lineItem.cost.totalAmount} />
+                  <Money
+                    data={lineItem.cost.subtotalAmount}
+                    strikethrough
+                    className="text-tertiary"
+                  />
+                </>
+              ) : (
+                <>
+                  <Money data={lineItem.cost.subtotalAmount} />
+                  {compareAtTotal > 0 &&
+                    compareAtTotal >
+                      Number(lineItem.cost.subtotalAmount.amount) && (
+                      <Money
+                        data={{
+                          amount: formatMoney(String(compareAtTotal)),
+                          currencyCode:
+                            lineItem.cost.subtotalAmount.currencyCode,
+                        }}
+                        strikethrough
+                        className="text-tertiary"
+                      />
+                    )}
+                </>
+              )}
             </div>
           </div>
         </div>
