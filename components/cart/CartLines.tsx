@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Divider, Placeholder, Money } from '@/components/ui';
 import { CartLine } from '@/types/storefront';
-import { formatMoney } from '@/utils/helpers';
+import { formatMoney, isDiscounted } from '@/utils/helpers';
 import CartQuantity from './CartQuantity';
 import CartRemove from './CartRemove';
 
@@ -85,13 +85,17 @@ const CartLineItem: React.FC<CartLineItemProps> = ({ lineItem }) => {
               ) : (
                 <>
                   <Money data={lineItem.cost.amountPerQuantity} />
-                  {lineItem.cost.compareAtAmountPerQuantity && (
-                    <Money
-                      data={lineItem.cost.compareAtAmountPerQuantity}
-                      strikethrough
-                      className="text-tertiary"
-                    />
-                  )}
+                  {lineItem.cost.compareAtAmountPerQuantity &&
+                    isDiscounted(
+                      lineItem.cost.amountPerQuantity,
+                      lineItem.cost.compareAtAmountPerQuantity
+                    ) && (
+                      <Money
+                        data={lineItem.cost.compareAtAmountPerQuantity}
+                        strikethrough
+                        className="text-tertiary"
+                      />
+                    )}
                 </>
               )}
             </div>
