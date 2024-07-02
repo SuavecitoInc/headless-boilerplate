@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useProduct } from '@/contexts/Product';
 import { Quantity, Money } from '@/components/ui';
 import { AddToCart } from '@/components/cart';
+import { isDiscounted } from '@/utils/helpers';
 
 const ProductForm: React.FC = () => {
   const { selectedVariant } = useProduct();
@@ -16,12 +17,16 @@ const ProductForm: React.FC = () => {
           className="text-[26px] font-bold md:text-[30px]"
           data={selectedVariant.price}
         />
-        {selectedVariant.compareAtPrice && (
-          <Money
-            className="text-[26px] font-bold text-zinc-400 line-through md:text-[30px]"
-            data={selectedVariant.compareAtPrice}
-          />
-        )}
+        {selectedVariant.compareAtPrice &&
+          isDiscounted(
+            selectedVariant.price,
+            selectedVariant.compareAtPrice
+          ) && (
+            <Money
+              className="text-[26px] font-bold text-zinc-400 line-through md:text-[30px]"
+              data={selectedVariant.compareAtPrice}
+            />
+          )}
       </div>
       <Quantity
         currentQuantity={quantity}
